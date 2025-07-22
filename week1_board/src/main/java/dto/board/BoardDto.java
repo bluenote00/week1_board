@@ -2,7 +2,7 @@ package dto.board;
 import java.util.Date;
 
 public class BoardDto {
-    private int board_id;             // 게시글 일련 번호
+    private int board_id;                // 게시글 일련 번호
     private String board_name;           // 게시글 제목
     private String board_content;        // 게시글 내용
     private String user_name;            // 작성자
