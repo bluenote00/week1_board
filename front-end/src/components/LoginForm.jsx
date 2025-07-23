@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import "../css/Form.css";
 
-const JoinForm = ({ onClose }) => {
+const LoginForm = ({ onClose }) => {
   const [loginId, setLoginId] = useState('');
   const [userName, setUserName] = useState('');
   const [userEmail, setUserEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSave = async () => {
-    if (!loginId || !userName || !userEmail || !password) {
+  const handleLogin = async () => {
+    if (!loginId || !password) {
       alert('모든 항목을 입력해주세요.');
       return;
     }
@@ -41,32 +41,21 @@ const JoinForm = ({ onClose }) => {
   return (
     <div className="detail-overlay" onClick={onClose}>
       <div className="detail-modal">
-
         <div className="detail-body">
           <h3>아이디</h3>
-          <input value={loginId} 
-          onChange={(e) => setLoginId(e.target.value)} />
+          <input value={loginId} />
 
           <h3>비밀번호</h3>
-          <input type="password" value={password} 
-          onChange={(e) => setPassword(e.target.value)} />
-
-          <h3>이름</h3>
-          <input value={userName} 
-          onChange={(e) => setUserName(e.target.value)} />
-
-          <h3>이메일</h3>
-          <input value={userEmail} 
-          onChange={(e) => setUserEmail(e.target.value)} />
+          <input type="password" value={password} />
         </div>
 
         <div className="detail-footer">
            <button className="btn-save" onClick={onClose}>닫기</button>
-          <button className="btn-save" onClick={handleSave}>가입하기</button>
+          <button className="btn-save" onClick={handleLogin}>로그인</button>
         </div>
       </div>
     </div>
   );
 };
 
-export default JoinForm;
+export default LoginForm;

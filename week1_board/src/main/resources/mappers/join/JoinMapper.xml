@@ -9,19 +9,19 @@
         </selectKey>
         INSERT INTO 	tb_user
         (
-                    user_no
-            ,		login_id
-            ,		user_name
-            ,		user_email
-            ,		password
-            ,		join_date
+                        user_no
+                ,		login_id
+                ,		user_name
+                ,		user_email
+                ,		password
+                ,		join_date
         ) VALUES (
-                    #{user_no}
-            ,		#{login_id}
-            ,		#{user_name}
-            ,		#{user_email}
-            ,		#{password}
-            ,		NOW()
+                        #{user_no}
+                ,		#{login_id}
+                ,		#{user_name}
+                ,		#{user_email}
+                ,		#{password}
+                ,		NOW()
         )
     </insert>
 

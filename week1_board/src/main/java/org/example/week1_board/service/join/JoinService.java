@@ -11,13 +11,18 @@ public class JoinService {
 
     @Autowired
     private JoinDao joinDao;
-    /** 회원가입 */
+
+    /**
+     * 회원가입
+     */
     public void registerUser(Map<String, Object> paramMap) throws Exception {
         joinDao.registerUser(paramMap);
     }
 
-    /** 아이디 중복 체크 */
-//    public void checkLoginId(Map<String, Object> paramMap) throws Exception {
-//        joinDao.checkLoginId(paramMap);
-//    }
+    /**
+     * 아이디 중복 체크
+     */
+    public int checkLoginId(Map<String, Object> paramMap) throws Exception {
+        return joinDao.checkLoginId(paramMap);
+    }
 }

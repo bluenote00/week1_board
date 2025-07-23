@@ -1,5 +1,5 @@
 
-const Main = ({ onJoinClick }) => {
+const Main = ({ onLoginClick, onJoinClick }) => {
   return (
     <div className="loginSection">
       <h1>로그인</h1>
@@ -8,7 +8,7 @@ const Main = ({ onJoinClick }) => {
       <p>비밀번호</p>
       <input />
       <div>
-        <button>로그인</button>
+        <button onClick={onLoginClick}>로그인</button>
         <button onClick={onJoinClick}>회원가입</button>
       </div>
     </div>
