@@ -25,10 +25,10 @@ const JoinForm = ({ onClose }) => {
       const res = await axios.post('/join/register', payload);
       const message = res.data.message;
 
-      if (message == '1') {
+      if (message === '1') {
         alert('이미 존재하는 아이디입니다.');
       
-      } else if (message == '2') {
+      } else if (message === '2') {
         alert('회원가입이 완료되었습니다.');
         onClose();
       }

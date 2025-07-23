@@ -28,22 +28,12 @@ public class LoginController {
      */
     @PostMapping("/loginUser")
     @ResponseBody
-    public Map<String, Object> loginUser(@RequestBody Map<String, Object> paramMap) throws Exception {
+    public Map<String, Object> loginUser(@RequestBody LoginDto loginDto) throws Exception {
         logger.info("   - Login start");
-        logger.info("   - paramMap : " + paramMap);
+        logger.info("   - loginDto : " + loginDto.getLogin_id());
+        logger.info("   - loginDto : " + loginDto.getPassword());
 
-        Map<String, Object> resultMap = new HashMap<>();
-        try {
-            joinDto = loginService.loginUser(loginDto);
-            if (joinDto == null) {
-                resultMap.put("message", "1");
-            } if else {
-                resultMap.put("message", "2");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return resultMap;
+        return loginService.loginUser(loginDto);
     }
 
 }

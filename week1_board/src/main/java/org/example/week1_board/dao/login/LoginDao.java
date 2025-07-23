@@ -6,6 +6,9 @@ import java.util.Map;
 
 @Mapper
 public interface LoginDao {
+        // 계정 확인
+        Map<String, Object> selectUserByLoginId(String loginId);
+
         // 로그인
-        void loginUser(Map<String, Object> paramMap) throws Exception;
+        Map<String, Object> loginUser(String loginId);
 }
