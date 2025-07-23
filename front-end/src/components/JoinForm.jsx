@@ -21,6 +21,7 @@ const JoinForm = ({ onClose }) => {
       password: password,
     };
 
+    console.log('가입 정보:', payload);
     try {
       await axios.post('/join/register', payload);
       alert('가입이 완료되었습니다.');

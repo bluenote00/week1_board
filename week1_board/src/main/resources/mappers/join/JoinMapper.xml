@@ -1,7 +1,34 @@
-
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="dto.join.JoinDto">
+<mapper namespace="org.example.week1_board.dao.join.JoinDao">
+    <!-- 회원가입 -->
+    <insert id="registerUser" parameterType="map">
+        <selectKey keyProperty="user_no" resultType="int" order="BEFORE">
+            SELECT IFNULL(MAX(user_no), 0) + 1 FROM tb_user
+        </selectKey>
+        INSERT INTO 	tb_user
+        (
+                    user_no
+            ,		login_id
+            ,		user_name
+            ,		user_email
+            ,		password
+            ,		join_date
+        ) VALUES (
+                    #{user_no}
+            ,		#{login_id}
+            ,		#{user_name}
+            ,		#{user_email}
+            ,		#{password}
+            ,		NOW()
+        )
+    </insert>
 
+    <!-- 로그인 ID 중복 체크 -->
+    <select id="checkLoginId" parameterType="map" resultType="int">
+        SELECT      COUNT(*)
+        FROM        tb_user
+        WHERE       login_id = #{login_id}
+    </select>
 </mapper>

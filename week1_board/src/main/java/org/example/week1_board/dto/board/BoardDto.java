@@ -1,4 +1,4 @@
-package dto.board;
+package org.example.week1_board.dto.board;
 import java.util.Date;
 
 public class BoardDto {

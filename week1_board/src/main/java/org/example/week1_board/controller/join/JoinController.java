@@ -1,12 +1,10 @@
-package controller.join;
+package org.example.week1_board.controller.join;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import service.join.JoinService;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import org.springframework.web.bind.annotation.*;
+import org.example.week1_board.service.join.JoinService;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,20 +17,19 @@ public class JoinController {
     /**
      * 회원가입
      */
-    @PostMapping("/resister")
+    @PostMapping("/register")
     @ResponseBody
-    public Map<String, Object> resisterUser(HttpSession session,@RequestBody Map<String, Object> paramMap, HttpServletRequest request) throws Exception {
+    public Map<String, Object> registerUser(@RequestBody Map<String, Object> paramMap) throws Exception {
 
         Map<String, Object> returnmap = new HashMap<String,Object>();
-        try {
-            joinService.resisterUser(paramMap);
 
+        try {
+            joinService.registerUser(paramMap);
             returnmap.put("resultmsg","가입 되었습니다.");
 
         } catch (Exception e) {
             throw e;
         }
-
         return returnmap;
     }
 

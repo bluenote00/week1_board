@@ -1,4 +1,4 @@
-package dto.login;
+package org.example.week1_board.dto.login;
 
 public class LoginDto {
     private String login_id;            // 사용자 ID

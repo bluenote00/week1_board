@@ -1,4 +1,4 @@
-package dto.join;
+package org.example.week1_board.dto.join;
 import java.util.Date;
 
 public class JoinDto {
