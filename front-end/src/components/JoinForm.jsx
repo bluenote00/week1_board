@@ -40,7 +40,7 @@ const JoinForm = ({ onClose }) => {
 
   return (
     <div className="detail-overlay" onClick={onClose}>
-      <div className="detail-modal">
+     <div className="detail-modal" onClick={(e) => e.stopPropagation()}>
 
         <div className="detail-body">
           <h3>아이디</h3>
