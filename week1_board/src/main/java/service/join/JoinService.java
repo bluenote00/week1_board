@@ -12,7 +12,7 @@ public class JoinService {
     /**
      * 회원가입
      */
-    public int registerUser(Map<String, Object> paramMap) throws Exception {
-        return joinDao.insertUser(paramMap);
+    public void resisterUser(Map<String, Object> paramMap) throws Exception {
+        joinDao.resisterUser(paramMap);
     }
 }

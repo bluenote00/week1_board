@@ -1,19 +1,20 @@
-import { Routes, Route } from "react-router-dom";
-
+import { useState } from "react";
 import './App.css';
 import Main from "./components/Main";
-import Login from "./components/Main";
-import Join from "./components/JoinForm";
+import JoinForm from "./components/JoinForm";
 
 function App() {
+  const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);
+
+  const openJoinModal = () => setIsJoinModalOpen(true);
+  const closeJoinModal = () => setIsJoinModalOpen(false);
+
   return (
     <div className="App">
-      <Main />
-       <Routes>
-          <Route path="/" element={<Main />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/join" element={<Join />} />
-        </Routes>
+      <Main onJoinClick={openJoinModal} />
+      {isJoinModalOpen && (
+        <JoinForm onClose={closeJoinModal} />
+      )}
     </div>
   );
 }

@@ -2,10 +2,7 @@ package controller.join;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import service.join.JoinService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,36 +19,22 @@ public class JoinController {
     /**
      * 회원가입
      */
-    @PostMapping("/register")
-    public ResponseEntity<Map<String, Object>> registerUser(
-            @RequestBody Map<String, Object> paramMap,
-            HttpServletRequest request,
-            HttpSession session) {
+    @PostMapping("/resister")
+    @ResponseBody
+    public Map<String, Object> resisterUser(HttpSession session,@RequestBody Map<String, Object> paramMap, HttpServletRequest request) throws Exception {
 
-        Map<String, Object> resultMap = new HashMap<>();
-
+        Map<String, Object> returnmap = new HashMap<String,Object>();
         try {
-            String inputEmail = (String) paramMap.get("login_id");
+            joinService.resisterUser(paramMap);
 
-            int registerResult = joinService.registerUser(paramMap);
-
-            if (registerResult > 0) {
-                session.removeAttribute("verifiedEmail");
-                session.removeAttribute("emailVerifiedAt");
-
-                resultMap.put("result", "Y");
-                resultMap.put("message", "회원가입이 완료되었습니다.");
-
-                return ResponseEntity.ok(resultMap);
-            } else {
-                resultMap.put("result", "N");
-                resultMap.put("message", "회원가입에 실패했습니다.");
-                return ResponseEntity.badRequest().body(resultMap);
-            }
+            returnmap.put("resultmsg","가입 되었습니다.");
 
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw e;
         }
 
-
+        return returnmap;
     }
+
+
+}

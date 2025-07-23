@@ -1,5 +1,8 @@
 package dao.join;
 
+import java.util.Map;
+
+@Mapper
 public class JoinDao {
-    public int insertUser(Map<String, Object> paramMap) throws Exception;
+    public void resisterUser(Map<String, Object> paramMap) throws Exception;
 }
