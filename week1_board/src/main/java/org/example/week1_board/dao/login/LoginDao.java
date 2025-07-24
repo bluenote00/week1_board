@@ -9,6 +9,4 @@ public interface LoginDao {
         // 계정 확인
         Map<String, Object> selectUserByLoginId(String loginId);
 
-        // 로그인
-        Map<String, Object> loginUser(String loginId);
 }

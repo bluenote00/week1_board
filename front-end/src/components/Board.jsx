@@ -1,8 +1,7 @@
-// import '../../../css/InfoManagement.css';
-// import Pagination from '../../common/Pagination.jsx';
-// import SubscriptManagementDetail from './SubscriptManagement_detail';
+import '../css/Board.css';
+import Pagination from '../components/common/Pagination';
+import BoardDetail from '../components/BoardDetail';
 import { useState, useEffect } from 'react';
-
 
 import axios from 'axios';
 
@@ -20,46 +19,48 @@ const Board = () => {
   useEffect(() => { 
     const fetchData = async () => {
       try {
-        const res = await axios.get('/api/admin/product/productList', {
+        const res = await axios.get('/board/boardList', {
           params: {
             currentpage: currentPage,
             pagesize: itemsPerPage
           }
         });
-          setData(res.productList);
-          setTotalCount(res.totalcnt);
+          setData(res.data.boardList);
+          setTotalCount(res.data.totalcnt);
       } catch (err) {
-        console.error('상품 안내 불러오기 실패:', err);
+        console.error('게시글 불러오기 실패:', err);
       }
     };
 
     fetchData();
   }, [currentPage]);
 
-  const deleteProduct = async () => {
+  const deleteBoard = async () => {
     if (selected.length === 0) {
-      alert('삭제할 상품을 선택해주세요.');
+      alert('삭제할 게시글을 선택해주세요.');
       return;
     }
 
-    if (!window.confirm('선택한 상품을 삭제하시겠습니까?')) return;
+    if (!window.confirm('선택한 게시글을 삭제하시겠습니까?')) return;
 
     try {
-      await axios.post('/api/admin/product/deleteProduct', { product_no: selected });
+      await axios.post('/board/deleteBoard', { board_no: selected });
       alert('삭제가 완료되었습니다.');
 
       // 삭제 후 목록 다시 가져오기
-      const res = await axios.get('/api/admin/product/productList', {
+      const res = await axios.get('/board/boardList', {
         params: {
           currentpage: currentPage,
           pagesize: itemsPerPage
         }
       });
-      setData(res.productList);
-      setTotalCount(res.totalcnt);
+
+      setData(res.data.boardList);
+      setTotalCount(res.data.totalcnt);
       setSelected([]);
+    
     } catch (err) {
-      console.error('상품 삭제 실패:', err);
+      console.error('글 삭제 실패:', err);
       alert('삭제 중 오류가 발생했습니다.');
     }
   };
@@ -70,13 +71,13 @@ const Board = () => {
 
   useEffect(() => {
     const allSelected = currentItems.length > 0 &&
-      currentItems.every(item => selected.includes(item.product_no));
+      currentItems.every(item => selected.includes(item.board_no));
     setIsAllSelected(allSelected);
   }, [currentItems, selected]);
 
-  const toggleCheckbox = (product_no) => {
+  const toggleCheckbox = (board_no) => {
     setSelected(prev =>
-      prev.includes(product_no) ? prev.filter(item => item !== product_no) : [...prev, product_no]
+      prev.includes(board_no) ? prev.filter(item => item !== board_no) : [...prev, board_no]
     );
   };
 
@@ -84,7 +85,7 @@ const Board = () => {
     if (isAllSelected) {
       setSelected([]);
     } else {
-      const allIds = currentItems.map(item => item.product_no);
+      const allIds = currentItems.map(item => item.board_no);
       setSelected(allIds);
     }
     setIsAllSelected(!isAllSelected);
@@ -107,38 +108,37 @@ const Board = () => {
     <div className='infoManagement'>
       <div className='info-content'>
         <div className='info-section-title-box'>
-          <h2>상품 관리</h2>
+          <h2>게시판</h2>
         </div>
 
         <div className='info-section-content-box'>
           <div className='info-header'>
             <div className='info-controls'>
-              <button onClick={deleteProduct}>선택 삭제</button>
-              <button onClick={openNewPostModal}>상품 등록</button>
+              <button onClick={deleteBoard}>선택 삭제</button>
+              <button onClick={openNewPostModal}>글 작성</button>
             </div>
           </div>
 
-          {/* {isDetailOpen && (
-            <SubscriptManagementDetail
+          {isDetailOpen && (
+            <BoardDetail
               item={detailItem}
               onClose={() => setIsDetailOpen(false)}
               mode={modalMode}
               onSaved={() => {
-                axios.get('/api/admin/product/productList', {
+                axios.get('/board/boardList', {
                   params: {
                     currentpage: currentPage,
                     pagesize: itemsPerPage,
                   },
                 })
                   .then((res) => {
-                    setData(res.productList);
-                    setTotalCount(res.totalcnt);
+                    setData(res.data.boardList);
+                    setTotalCount(res.data.totalcnt);
                   })
                   .catch((err) => console.error(err));
               }}
             />
-          )}  */}
-
+          )} 
 
           <table className='info-table'>
             <thead>
@@ -151,38 +151,36 @@ const Board = () => {
                   />
                 </th>
                 <th>번호</th>
-                <th>상품명</th>
-                <th>가격</th>
-                <th>사용유무</th>
+                <th>제목</th>
+                <th>작성자</th>
                 <th>등록일자</th>
               </tr>
             </thead>
             <tbody>
               {currentItems.map((item) => (
-                <tr key={item.product_no}>
+                <tr key={item.board_no}>
                   <td>
                     <input
                       type='checkbox'
-                      checked={selected.includes(item.product_no)}
-                      onChange={() => toggleCheckbox(item.product_no)}
+                      checked={selected.includes(item.board_no)}
+                      onChange={() => toggleCheckbox(item.board_no)}
                     />
                   </td>
-                  <td>{item.product_no}</td>
+                  <td>{item.board_no}</td>
                   <td className="info-title"
-                    onClick={() => openDetail(item)}>{item.product_name}</td>
-                  <td> {item.price.toLocaleString()}원</td>
-                  <td>{item.use_yn}</td>
-                  <td>{item.created_date}</td>
+                    onClick={() => openDetail(item)}>{item.board_name}</td>
+                  <td> {item.user_name}</td>
+                  <td>{item.board_date}</td>
                 </tr>
               ))}
             </tbody>
           </table>
 
-          {/* <Pagination
+          <Pagination
             currentPage={currentPage}
             totalPages={totalPages}
             setCurrentPage={setCurrentPage}
-          /> */}
+          />
 
         </div>
       </div>
